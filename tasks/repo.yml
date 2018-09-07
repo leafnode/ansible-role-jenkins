@@ -1,0 +1,23 @@
+---
+# Provides add-apt-repository
+- name: Install python-software-properties
+  become: yes
+  action: "{{ ansible_pkg_mgr }} pkg=python-software-properties state=installed update-cache=yes"
+
+- name: Install python-pycurl
+  become: yes
+  action: "{{ ansible_pkg_mgr }} pkg=python-pycurl state=installed update-cache=yes"
+
+# Add Jenkins repository key
+- name: Add jenkins apt-key
+  become: yes
+  action: apt_key url={{ jenkins.deb.key }} state=present
+
+# Add Jenkins repository
+- name: Add Jenkins repository
+  become: yes
+  action: apt_repository repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
+
+# Ugly workaround fixing the auto-add src repo when using apt_repository
+#- name: Remove invalid Jenkins src repository
+#  action: command sed --in-place '/deb-src.*pkg.jenkins-ci/d' /etc/apt/sources.list

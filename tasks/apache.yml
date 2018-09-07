@@ -1,0 +1,26 @@
+---
+- name: Enable proxy module
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - proxy
+    - proxy_http
+  notify:
+      - Restart Apache
+
+- name: Create .htpasswd-users
+  template:
+    dest: /etc/apache2/.htpasswd-users
+    src: htpasswd-users.j2
+    owner: "www-data"
+
+- name: Create apache2 configuration
+  template:
+    src: vhost-configuration.j2
+    dest: /etc/apache2/sites-available/jenkins-configuration.conf
+
+- name: Enable apache2 vhosts
+  shell: a2ensite jenkins-configuration.conf
+  notify:
+    - Restart Apache

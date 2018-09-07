@@ -1,0 +1,16 @@
+---
+jenkins_domain: 127.0.0.1
+jenkins_admin_login: admin
+jenkins_admin_pass: password
+ansible_backup_vault_pass: ""
+jenkins_ansible_version: 2.3
+jenkins_basicauth_users: []
+jenkins_scripts:
+  - "clean-workspace.groovy"
+jenkins_home_dir: "/var/lib/jenkins"
+jenkins_slave: false
+jenkins_do_snapshots: false
+jenkins_rundeck: false
+jenkins_db: []
+# jenkins_db:
+#  - { database: foo, owner: bar }

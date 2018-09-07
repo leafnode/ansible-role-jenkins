@@ -1,0 +1,22 @@
+---
+- name: Add jenkins user
+  user:
+    name: jenkins
+    state: present
+
+- name: Add jenkins key
+  authorized_key:
+    user: "jenkins"
+    key: "{{ jenkins_key }}"
+  when: jenkins_key is defined
+
+- name: Cleanup apache2 and mod_php
+  apt:
+    pkg: "{{ item }}"
+    state: absent
+    purge: yes
+  with_items:
+    - libapache2-mod-php7.0
+    - apache2-bin
+    - apache2-data
+    - apache2

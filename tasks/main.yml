@@ -1,0 +1,19 @@
+---
+# Add Jenkins repository
+- include: jenkins.yml
+  when: ansible_distribution in [ 'Debian', 'Ubuntu' ] and jenkins_slave|bool == false
+
+- include: jenkins-slave.yml
+  when: jenkins_slave|bool == true
+
+- include: jenkins-env.yml
+
+- include: ansible.yml
+
+- include: postgresql.yml
+
+- include: snapshots.yml
+  when: jenkins_do_snapshots|bool == true
+
+- include: rundeck.yml
+  when: jenkins_rundeck|bool == true

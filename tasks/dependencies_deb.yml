@@ -1,0 +1,19 @@
+---
+# Add required repos
+- name: Add repos
+  apt_repository:
+    repo: "{{ item }}"
+    update_cache: true
+  with_items: "{{ jenkins.deb.ppa }}"
+
+# Install Jenkins dependencies
+- name: Install dependencies
+  become: yes
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }} state=installed update-cache=yes"
+  with_items: "{{ jenkins.deb.dependencies }}"
+
+# Uninstall packages
+- name: Uninstall conflicting packages
+  become: yes
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }} state=absent update-cache=yes"
+  with_items: "{{ jenkins.deb.remove_packages }}"

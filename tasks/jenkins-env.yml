@@ -1,0 +1,58 @@
+---
+- name: Create scripts folder for jenkins
+  file:
+    path: "{{ jenkins_home_dir }}/scripts"
+    state: directory
+    owner: jenkins
+    group: jenkins
+
+- name: Upload selected scripts
+  template:
+    src: "scripts/{{ item }}"
+    dest: "{{ jenkins_home_dir }}/scripts/{{ item }}"
+  with_items: "{{ jenkins_scripts }}"
+
+- name: Create jenkins .ssh folder
+  file:
+    path: "{{ jenkins_home_dir }}/.ssh"
+    state: directory
+
+- name: Upload known_hosts
+  copy:
+    src: "{{ jenkins_known_hosts }}"
+    dest: "{{ jenkins_home_dir }}/.ssh/known_hosts"
+    owner: jenkins
+    group: jenkins
+  when: jenkins_known_hosts is defined
+  tags: jenkins_known_hosts
+
+- name: Copy ssh private key
+  template:
+    src: "{{ jenkins_ssh_private_key }}"
+    dest: "{{ jenkins_home_dir }}/.ssh/id_rsa"
+    owner: "jenkins"
+    mode: 0600
+  when: jenkins_ssh_private_key is defined
+
+- name: Copy ssh public key
+  template:
+    src: "{{ jenkins_ssh_public_key }}"
+    dest: "{{ jenkins_home_dir }}/.ssh/id_rsa.pub"
+    owner: "jenkins"
+    mode: 0600
+  when: jenkins_ssh_public_key is defined
+
+- name: Add jenkins slave work directory
+  file:
+    path: "{{ jenkins_home_dir }}/jenkins-slave"
+    state: directory
+    owner: jenkins
+    group: jenkins
+
+- name: Install slack notification script
+  template:
+    src: "templates/jenkins/backup-notification.j2"
+    dest: "/usr/local/bin/backup-notification"
+    owner: root
+    group: root
+    mode: 0755

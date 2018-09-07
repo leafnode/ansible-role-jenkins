@@ -1,0 +1,10 @@
+---
+- name: Install ruby
+  apt:
+    name: ruby
+    state: present
+
+- name: Install do_snapshots gem
+  gem:
+    name: do_snapshot
+    state: present

@@ -1,0 +1,7 @@
+# Safe-restart Jenkins
+- name: Restart Jenkins
+  become: yes
+  command: java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 safe-restart --username={{ jenkins_admin_login }} --password={{ jenkins_admin_pass }}
+
+- name: Restart Apache
+  service: name=apache2 enabled=yes state=restarted

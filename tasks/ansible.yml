@@ -1,0 +1,46 @@
+---
+- name: Install pip, python-dev package with apt
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time | default(3600) }}"
+  with_items:
+    - python-dev
+    - libssl-dev
+    - libffi-dev
+    - python-pip
+
+- name: Install ansible from pip
+  pip:
+    name: ansible
+    state: present
+    version: "{{ jenkins_ansible_version }}"
+
+- name: Create ansible configuration directory
+  file:
+    path: "/etc/ansible"
+    state: directory
+
+- name: Install ansible configuration file
+  copy:
+    src: "{{ jenkins_ansible_cfg }}"
+    dest: "/etc/ansible/ansible.cfg"
+    mode: 0644
+    owner: root
+    group: root
+  when: jenkins_ansible_cfg is defined
+
+- name: Create ansible callback directory
+  file:
+    path: "/usr/share/ansible/callbacks"
+    state: directory
+
+- name: Install ansible callbacks
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/share/ansible/callbacks"
+    mode: 0644
+    owner: root
+    group: root
+  with_items: "{{ jenkins_ansible_callbacks }}"

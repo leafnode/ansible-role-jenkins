@@ -1,0 +1,13 @@
+---
+- name: Install arundeckrun
+  pip:
+    name: arundeckrun
+    state: present
+
+- name: Install apicall script
+  copy:
+    src: rundeckapicall.py
+    dest: /usr/local/bin/rundeckapicall
+    mode: 0755
+    owner: root
+    group: root
