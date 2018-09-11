@@ -11,6 +11,10 @@
     - libffi-dev
     - python-pip
 
+- name: Upgrade openSSL
+  shell: "python -m easy_install --upgrade pyOpenSSL"
+  changed_when: false
+
 - name: Install ansible from pip
   pip:
     name: ansible
