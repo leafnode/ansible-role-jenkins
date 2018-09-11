@@ -48,12 +48,4 @@
     state: directory
     owner: jenkins
     group: jenkins
-  when: jenkins_slave|bool == false
-
-- name: Install slack notification script
-  template:
-    src: "templates/jenkins/backup-notification.j2"
-    dest: "/usr/local/bin/backup-notification"
-    owner: root
-    group: root
-    mode: 0755
+  when: jenkins_slave|bool == true
