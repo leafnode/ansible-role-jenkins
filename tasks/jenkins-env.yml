@@ -48,6 +48,7 @@
     state: directory
     owner: jenkins
     group: jenkins
+  when: jenkins_slave|bool == false
 
 - name: Install slack notification script
   template:

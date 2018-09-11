@@ -1,7 +1,6 @@
 ---
 jenkins_domain: 127.0.0.1
-jenkins_admin_login: admin
-jenkins_admin_pass: password
+jenkins_ansible_callbacks: []
 ansible_backup_vault_pass: ""
 jenkins_ansible_version: 2.3
 jenkins_basicauth_users: []
