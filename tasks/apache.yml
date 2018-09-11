@@ -20,7 +20,14 @@
     src: vhost-configuration.j2
     dest: /etc/apache2/sites-available/jenkins-configuration.conf
 
+- name: Check if jenkins vhost is enabled
+  stat:
+    path: /etc/apache2/sites-enabled/jenkins-configuration.conf
+  register: jenkins_apache_vhost
+  changed_when: false
+
 - name: Enable apache2 vhosts
   shell: a2ensite jenkins-configuration.conf
   notify:
     - Restart Apache
+  when: jenkins_apache_vhost.stat.exists == false
