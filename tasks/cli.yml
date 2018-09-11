@@ -27,6 +27,11 @@
     owner: jenkins
     group: jenkins
 
+- name: Check if Jenkins updates are installed
+  stat:
+    path: "{{ jenkins.updates_dest }}"
+  register: jenkins_updates
+
 # Get latest Jenkins update file
 - name: Get Jenkins updates
   become: yes
@@ -35,12 +40,12 @@
     dest: "{{ jenkins.updates_dest }}"
     thirsty: yes
     mode: 0440
-  register: jenkins_updates
+  when: jenkins_updates.stat.exists == false
 
 # Jenkins Update-center
 - name: Update-center Jenkins
   become: yes
   action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
-  when: jenkins_updates.changed
+  when: jenkins_updates.stat.exists == false
   notify:
     - 'Restart Jenkins'
