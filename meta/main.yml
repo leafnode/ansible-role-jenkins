@@ -12,5 +12,4 @@ galaxy_info:
   galaxy_tags: []
 
 dependencies:
-  - java8
-  - apache
+  - iroquoisorg.java8

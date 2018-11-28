@@ -2,6 +2,6 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - java8
-    - apache
+    - iroquoisorg.java8
+    - iroquoisorg.apache
     - ansible-role-jenkins

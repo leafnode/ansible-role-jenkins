@@ -1,10 +1,3 @@
 ---
-- src: https://github.com/iroquoisorg/ansible-role-java8.git
-  name: java8
-  version: master
-  scm: git
-
-- src: https://github.com/iroquoisorg/ansible-role-apache.git
-  name: apache
-  version: master
-  scm: git
+- src: iroquoisorg.java8
+- src: iroquoisorg.apache
