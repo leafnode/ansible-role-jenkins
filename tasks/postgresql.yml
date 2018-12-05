@@ -3,7 +3,7 @@
   postgresql_user:
       name: "{{ item.owner }}"
       role_attr_flags: CREATEDB
-  become: yes
+  become: true
   become_user: postgres
   with_items: "{{ jenkins_db }}"
   tags: jenkins_db
@@ -12,7 +12,7 @@
   postgresql_db: 
       name: "{{ item.database }}"
       owner: "{{ item.owner }}"
-  become: yes
+  become: true
   become_user: postgres
   with_items: "{{ jenkins_db }}"
   tags: jenkins_db

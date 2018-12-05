@@ -7,21 +7,21 @@
 
 # Create Jenkins CLI destination directory
 - name: "Create Jenkins CLI destination directory: ${jenkins.dest}"
-  become: yes
+  become: true
   file:
     path: "{{ jenkins_dest }}"
     state: directory
 
 # Get Jenkins CLI from localhost
 - name: Get Jenkins CLI
-  become: yes
+  become: true
   get_url:
     url: http://localhost:8080/jnlpJars/jenkins-cli.jar
     dest: "{{ jenkins.cli_dest }}"
     mode: 0440
 
 - name: Change owner of Jenkins CLI
-  become: yes
+  become: true
   file:
     path: "{{ jenkins.cli_dest }}"
     owner: jenkins
@@ -34,17 +34,17 @@
 
 # Get latest Jenkins update file
 - name: Get Jenkins updates
-  become: yes
+  become: true
   get_url:
     url: http://updates.jenkins-ci.org/update-center.json
     dest: "{{ jenkins.updates_dest }}"
-    thirsty: yes
+    thirsty: true
     mode: 0440
   when: jenkins_updates.stat.exists == false
 
 # Jenkins Update-center
 - name: Update-center Jenkins
-  become: yes
+  become: true
   action: "shell cat {{ jenkins.updates_dest }} | sed '1d;$d' | curl -X POST -H 'Accept: application/json' -d @- http://localhost:8080/updateCenter/byId/default/postBack"
   when: jenkins_updates.stat.exists == false
   notify:

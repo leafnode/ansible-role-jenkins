@@ -14,7 +14,7 @@
   apt:
     pkg: "{{ item }}"
     state: absent
-    purge: yes
+    purge: true
   with_items:
     - libapache2-mod-php7.0
     - apache2-bin

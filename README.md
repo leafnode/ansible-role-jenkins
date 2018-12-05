@@ -30,3 +30,7 @@ jenkins_db: []
 #  - { database: foo, owner: bar }
 
 ```
+
+# Development
+
+Please check [development guide](DEVELOPMENT.md) for details about developing and testing this role.
