@@ -1,6 +1,6 @@
 # jenkins
 
-[![Build Status](https://travis-ci.com/iroquoisorg/ansible-role-jenkins.svg?branch=master)](https://travis-ci.com/iroquoisorg/ansible-role-memcached)
+[![Build Status](https://travis-ci.com/iroquoisorg/ansible-role-jenkins.svg?branch=master)](https://travis-ci.com/iroquoisorg/ansible-role-jenkins)
 
 Ansible role for jenkins
 
